@@ -1,0 +1,318 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------------
+ * Zylos Design Tokens
+ * Single source of truth for color, typography, spacing, radius, shadows and
+ * motion. Every component inherits from these tokens — no arbitrary values.
+ * ------------------------------------------------------------------------- */
+
+@theme {
+  /* Color — foundation */
+  --color-midnight: #0a142f;
+  --color-charcoal: #111827;
+  --color-graphite: #1a2238;
+  --color-graphite-light: #232d4a;
+
+  /* Color — text */
+  --color-foreground: #ffffff;
+  --color-silver: #d9d9d9;
+  --color-mist: #a0aec0;
+
+  /* Color — accents */
+  --color-gold: #d4af37;
+  --color-champagne: #e5c76b;
+  --color-bronze: #a97142;
+  --color-ivory: #f8f7f3;
+
+  /* Color — semantic */
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* Typography */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+
+  /* Fluid type scale */
+  --text-display-xl: clamp(2.75rem, 1.5rem + 5.5vw, 6.5rem);
+  --text-display-xl--line-height: 1.02;
+  --text-display-xl--letter-spacing: -0.03em;
+  --text-display-lg: clamp(2.25rem, 1.25rem + 3.5vw, 4.5rem);
+  --text-display-lg--line-height: 1.08;
+  --text-display-lg--letter-spacing: -0.02em;
+  --text-h1: clamp(2rem, 1.35rem + 2.4vw, 3.5rem);
+  --text-h1--line-height: 1.12;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(1.65rem, 1.2rem + 1.6vw, 2.5rem);
+  --text-h2--line-height: 1.18;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.3rem, 1.1rem + 0.9vw, 1.75rem);
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.01em;
+  --text-h4: clamp(1.1rem, 1rem + 0.5vw, 1.25rem);
+  --text-h4--line-height: 1.4;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75;
+  --text-body: 1rem;
+  --text-body--line-height: 1.7;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.6;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.5;
+  --text-caption--letter-spacing: 0.08em;
+  --text-overline: 0.8125rem;
+  --text-overline--line-height: 1.4;
+  --text-overline--letter-spacing: 0.22em;
+
+  /* Border radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 2rem;
+
+  /* Elevation — soft layered shadows, never harsh */
+  --shadow-sm: 0 1px 2px rgb(3 7 18 / 0.35), 0 2px 8px rgb(3 7 18 / 0.25);
+  --shadow-md: 0 4px 12px rgb(3 7 18 / 0.35), 0 12px 32px rgb(3 7 18 / 0.3);
+  --shadow-lg: 0 8px 24px rgb(3 7 18 / 0.4), 0 24px 64px rgb(3 7 18 / 0.35);
+  --shadow-floating:
+    0 12px 32px rgb(3 7 18 / 0.45), 0 32px 80px rgb(3 7 18 / 0.4);
+  --shadow-modal:
+    0 24px 64px rgb(3 7 18 / 0.55), 0 48px 120px rgb(3 7 18 / 0.5);
+  --shadow-gold-glow: 0 0 24px rgb(212 175 55 / 0.25);
+
+  /* Motion tokens */
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-soft: cubic-bezier(0.65, 0, 0.35, 1);
+  --duration-fast: 200ms;
+  --duration-base: 350ms;
+  --duration-slow: 600ms;
+  --duration-cinematic: 1200ms;
+
+  /* Layout */
+  --container-content: 80rem;
+
+  /* Breakpoints (mobile-first) */
+  --breakpoint-xs: 40rem;
+  --breakpoint-uw: 120rem;
+
+  /* Animations */
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-shimmer: shimmer 1.8s ease-in-out infinite;
+  --animate-float: float 7s ease-in-out infinite;
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-12px);
+    }
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Spacing tokens
+ * Named XS–3XL rhythm used by layout utilities below. Kept outside @theme
+ * on purpose: registering them as --spacing-* would shadow Tailwind's
+ * container scale (max-w-xl etc.) during utility resolution.
+ * ------------------------------------------------------------------------- */
+
+:root {
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1.25rem;
+  --space-lg: 2rem;
+  --space-xl: 3.25rem;
+  --space-2xl: 5.25rem;
+  --space-3xl: 8.5rem;
+}
+
+/* ---------------------------------------------------------------------------
+ * Base
+ * ------------------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-midnight);
+  color: var(--color-foreground);
+  font-family: var(--font-sans);
+  overflow-x: clip;
+}
+
+::selection {
+  background-color: rgb(212 175 55 / 0.35);
+  color: var(--color-ivory);
+}
+
+/* Accessible focus — soft gold ring, never removed */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* Custom scrollbar tuned to the dark luxury palette */
+@media (pointer: fine) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--color-charcoal);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-graphite-light);
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(212 175 55 / 0.5);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+ * Utilities
+ * ------------------------------------------------------------------------- */
+
+@utility glass {
+  background: rgb(26 34 56 / 0.55);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgb(248 247 243 / 0.08);
+}
+
+@utility glass-strong {
+  background: rgb(10 20 47 / 0.78);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgb(248 247 243 / 0.1);
+}
+
+@utility text-gradient-gold {
+  background: linear-gradient(
+    120deg,
+    var(--color-champagne) 0%,
+    var(--color-gold) 45%,
+    var(--color-bronze) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+@utility container-content {
+  margin-inline: auto;
+  width: 100%;
+  max-width: var(--container-content);
+  padding-inline: var(--space-md);
+
+  @media (width >= 40rem) {
+    padding-inline: var(--space-lg);
+  }
+  @media (width >= 64rem) {
+    padding-inline: var(--space-xl);
+  }
+}
+
+@utility section-padding {
+  padding-block: var(--space-2xl);
+
+  @media (width >= 64rem) {
+    padding-block: var(--space-3xl);
+  }
+}
+
+/* Editorial prose for blog articles */
+@utility prose-luxury {
+  & > * + * {
+    margin-top: 1.5em;
+  }
+  & h2 {
+    font-family: var(--font-serif);
+    font-size: var(--text-h2);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    margin-top: 2.2em;
+    color: var(--color-ivory);
+  }
+  & h3 {
+    font-family: var(--font-serif);
+    font-size: var(--text-h3);
+    line-height: 1.3;
+    font-weight: 600;
+    margin-top: 1.8em;
+    color: var(--color-ivory);
+  }
+  & p {
+    font-size: var(--text-body-lg);
+    line-height: 1.85;
+    color: var(--color-silver);
+  }
+  & a {
+    color: var(--color-gold);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color var(--duration-fast) var(--ease-out-quart);
+  }
+  & a:hover {
+    color: var(--color-bronze);
+  }
+  & blockquote {
+    border-left: 2px solid var(--color-gold);
+    padding-left: var(--space-lg);
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-style: italic;
+    color: var(--color-ivory);
+  }
+  & ul {
+    list-style: disc;
+    padding-left: 1.5em;
+    color: var(--color-silver);
+  }
+  & li {
+    margin-top: 0.6em;
+    font-size: var(--text-body-lg);
+    line-height: 1.75;
+  }
+  & strong {
+    color: var(--color-ivory);
+  }
+}

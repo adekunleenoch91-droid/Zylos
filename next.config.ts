@@ -1,0 +1,60 @@
+import type { NextConfig } from "next";
+
+/**
+ * Security headers applied to every route. CSP allows self-hosted assets
+ * only; inline styles are required by Next.js font optimization and
+ * framer-motion, and blob workers are used by DRACO/KTX2 decoders.
+ */
+const securityHeaders = [
+  {
+    key: "Content-Security-Policy",
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      "style-src 'self' 'unsafe-inline'",
+      "img-src 'self' data: blob:",
+      "font-src 'self' data:",
+      "connect-src 'self' blob:",
+      "worker-src 'self' blob:",
+      "frame-ancestors 'none'",
+      "base-uri 'self'",
+      "form-action 'self'",
+    ].join("; "),
+  },
+  { key: "X-Content-Type-Options", value: "nosniff" },
+  { key: "X-Frame-Options", value: "DENY" },
+  { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
+  },
+];
+
+const nextConfig: NextConfig = {
+  reactStrictMode: true,
+  poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+    deviceSizes: [320, 640, 768, 1024, 1280, 1536, 1920, 2560],
+  },
+  async headers() {
+    return [
+      { source: "/:path*", headers: securityHeaders },
+      {
+        source: "/:all*(glb|ktx2|woff2|avif|webp)",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=31536000, immutable",
+          },
+        ],
+      },
+    ];
+  },
+};
+
+export default nextConfig;
