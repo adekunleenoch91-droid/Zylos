@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { TextAreaField, TextField } from "@/components/ui/Field";
 import { Notice } from "@/components/ui/Notice";
+import { track } from "@/lib/analytics";
 
 interface ScheduleViewingFormProps {
   propertyTitle: string;
@@ -38,6 +39,7 @@ export function ScheduleViewingForm({
     setStatus("loading");
     // Simulated submission — connect to your CRM or API route in production.
     await new Promise((r) => setTimeout(r, 1100));
+    track("viewing_request", { property: propertyTitle });
     setStatus("success");
   }
 

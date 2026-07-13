@@ -3,6 +3,7 @@
 import { ArrowRight } from "lucide-react";
 import { useId, useState } from "react";
 import { Notice } from "@/components/ui/Notice";
+import { track } from "@/lib/analytics";
 
 type Status = "idle" | "loading" | "success" | "error";
 
@@ -24,6 +25,7 @@ export function NewsletterForm() {
     setStatus("loading");
     // Simulated subscription — swap for a real endpoint or CMS integration.
     await new Promise((r) => setTimeout(r, 900));
+    track("newsletter_subscribe");
     setStatus("success");
     setEmail("");
   }

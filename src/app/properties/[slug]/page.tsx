@@ -20,6 +20,7 @@ import { FloorPlan } from "@/components/property/FloorPlan";
 import { LocationMap } from "@/components/property/LocationMap";
 import { MortgageCalculator } from "@/components/property/MortgageCalculator";
 import { PropertyGallery } from "@/components/property/PropertyGallery";
+import { PropertyViewer } from "@/components/three/PropertyViewer";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Badge } from "@/components/ui/Badge";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -180,6 +181,28 @@ export default async function PropertyDetailPage({ params }: PageProps) {
                   {paragraph}
                 </p>
               ))}
+            </div>
+          </Reveal>
+
+          {/* Interactive 3D viewer */}
+          <Reveal as="section" aria-labelledby="viewer-title">
+            <h2
+              id="viewer-title"
+              className="font-serif text-h2 font-medium text-ivory"
+            >
+              In three dimensions
+            </h2>
+            <p className="mt-4 max-w-2xl text-body leading-relaxed text-mist">
+              Explore the residence&apos;s architectural massing from any
+              angle. A measured model and full virtual tour are presented
+              privately during your viewing.
+            </p>
+            <div className="mt-8">
+              <PropertyViewer
+                type={property.type}
+                title={property.title}
+                fallbackImage={property.images[0]}
+              />
             </div>
           </Reveal>
 

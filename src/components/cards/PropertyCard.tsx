@@ -12,6 +12,7 @@ import {
 import { Bath, BedDouble, Heart, MapPin, Ruler } from "lucide-react";
 import { useState, type PointerEvent } from "react";
 import { Badge } from "@/components/ui/Badge";
+import { track } from "@/lib/analytics";
 import { cn, formatPrice, statusLabels, typeLabels } from "@/lib/utils";
 import type { Property } from "@/types";
 
@@ -79,7 +80,10 @@ export function PropertyCard({ property, priority = false }: PropertyCardProps) 
         </div>
         <button
           type="button"
-          onClick={() => setSaved((s) => !s)}
+          onClick={() => {
+            setSaved((s) => !s);
+            if (!saved) track("property_save", { property: property.slug });
+          }}
           aria-pressed={saved}
           aria-label={saved ? "Remove from saved properties" : "Save property"}
           className="absolute right-4 top-4 z-10 rounded-full border border-ivory/15 bg-midnight/50 p-2.5 backdrop-blur-md transition-all duration-(--duration-base) hover:border-gold/50 hover:shadow-gold-glow"

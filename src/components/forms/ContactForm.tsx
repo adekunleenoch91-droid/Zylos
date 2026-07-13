@@ -4,6 +4,7 @@ import { useState, type FormEvent } from "react";
 import { Button } from "@/components/ui/Button";
 import { SelectField, TextAreaField, TextField } from "@/components/ui/Field";
 import { Notice } from "@/components/ui/Notice";
+import { track } from "@/lib/analytics";
 
 interface Errors {
   name?: string;
@@ -36,6 +37,7 @@ export function ContactForm() {
     setStatus("loading");
     // Simulated submission — connect to your CRM or API route in production.
     await new Promise((r) => setTimeout(r, 1200));
+    track("contact_submit", { interest: String(data.get("interest")) });
     setStatus("success");
   }
 

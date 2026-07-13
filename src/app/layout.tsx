@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
+import { Analytics } from "@/components/analytics/Analytics";
 import { BackToTop } from "@/components/layout/BackToTop";
 import { Footer } from "@/components/layout/Footer";
 import { Navbar } from "@/components/layout/Navbar";
@@ -77,6 +78,7 @@ export default function RootLayout({
         </main>
         <Footer />
         <BackToTop />
+        <Analytics />
       </body>
     </html>
   );

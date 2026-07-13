@@ -3,18 +3,29 @@ import type { NextConfig } from "next";
 /**
  * Security headers applied to every route. CSP allows self-hosted assets
  * only; inline styles are required by Next.js font optimization and
- * framer-motion, and blob workers are used by DRACO/KTX2 decoders.
+ * framer-motion, and blob workers are used by DRACO/KTX2 decoders. Google
+ * Analytics origins are appended to the policy only when analytics is
+ * actually enabled, so the default posture stays as tight as possible.
  */
+const analyticsEnabled = Boolean(process.env.NEXT_PUBLIC_ANALYTICS_ID);
+const gaScript = analyticsEnabled
+  ? " https://www.googletagmanager.com https://www.google-analytics.com"
+  : "";
+const gaConnect = analyticsEnabled
+  ? " https://www.google-analytics.com https://region1.google-analytics.com"
+  : "";
+const gaImg = analyticsEnabled ? " https://www.google-analytics.com" : "";
+
 const securityHeaders = [
   {
     key: "Content-Security-Policy",
     value: [
       "default-src 'self'",
-      "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+      `script-src 'self' 'unsafe-inline' 'unsafe-eval'${gaScript}`,
       "style-src 'self' 'unsafe-inline'",
-      "img-src 'self' data: blob:",
+      `img-src 'self' data: blob:${gaImg}`,
       "font-src 'self' data:",
-      "connect-src 'self' blob:",
+      `connect-src 'self' blob:${gaConnect}`,
       "worker-src 'self' blob:",
       "frame-ancestors 'none'",
       "base-uri 'self'",
