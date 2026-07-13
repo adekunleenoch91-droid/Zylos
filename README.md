@@ -40,6 +40,45 @@ Copy `.env.example` to `.env.local` (or configure in your host):
 - `NEXT_PUBLIC_ANALYTICS_ID` — GA4 measurement ID. When set, GA4 +
   Core Web Vitals reporting load (anonymized IP) and the CSP automatically
   allows the Google Analytics origins. Blank disables all analytics.
+- `NEXT_PUBLIC_IMAGE_HOST` — optional CDN/object-store host for real
+  photographs; allow-listed for next/image and added to the CSP. Blank
+  serves all imagery same-origin from `/public`.
+
+## Imagery
+
+The site ships with original, license-clean **placeholder artwork** —
+cinematic dusk architectural scenes generated as lightweight SVG
+(`scripts/generate-artwork.mjs`, run `node scripts/generate-artwork.mjs`).
+They are deliberately atmospheric rather than photographic.
+
+To move to **real, photorealistic imagery** without touching any component
+(every page references stable filenames under `public/images/**`):
+
+1. **See the prompts.** `docs/IMAGE-PROMPTS.md` lists all 57 image slots
+   with a tailored photorealistic prompt and aspect ratio for each. It is
+   regenerated from `scripts/image-manifest.mjs`.
+2. **Generate + drop in.** Produce each image with any AI image tool, save
+   it at the listed path (keep the filename, prefer `.jpg`/`.webp`), and
+   it appears everywhere automatically. Next/Image converts to AVIF/WebP
+   and resizes per device.
+3. **Or automate it.** Set `IMAGE_API_KEY` (OpenAI Images-compatible by
+   default; configurable via `IMAGE_API_URL` / `IMAGE_MODEL`) and run
+   `node scripts/generate-images.mjs` to generate every image into
+   `public/images/**`. `--force` overwrites; `--only=<path>` targets one.
+
+Because the placeholders are `.svg` and photographs are `.jpg`, flip the
+extensions once. Most image paths live in the data layer; a few brand/hero
+images are referenced directly in components. This covers both (the OG
+banner and favicon are intentionally left as generated art):
+
+```bash
+sed -i 's/\.svg"/\.jpg"/g' src/data/*.ts
+sed -i "s#/images/brand/\(about-hero\|lifestyle\|office\|journey\)\.svg#/images/brand/\1.jpg#g; s#property-1-exterior\.svg#property-1-exterior.jpg#g" \
+  src/components/sections/BrandIntro.tsx \
+  src/components/sections/LifestyleSection.tsx \
+  src/app/about/page.tsx \
+  src/components/three/HeroExperience.tsx
+```
 
 ## Architecture
 

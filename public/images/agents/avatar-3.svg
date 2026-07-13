@@ -1,6 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><defs><linearGradient id="pb" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#1A2238"/><stop offset="1" stop-color="#060D22"/>
-  </linearGradient>
-  <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#D4AF37" stop-opacity="0"/><stop offset="1" stop-color="#D4AF37" stop-opacity="0.85"/>
-  </linearGradient></defs><rect width="400" height="400" fill="url(#pb)"/><circle cx="200" cy="168" r="136" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.5"/><circle cx="209" cy="144" r="64" fill="#1F2A47"/><path d="M 104.70759899541736 312 Q 112.70759899541736 220.00000000000003 168.70759899541736 208 L 248.70759899541736 208 Q 304.70759899541736 220.00000000000003 312.70759899541736 312 L 312.70759899541736 400 L 104.70759899541736 400 Z" fill="#1F2A47"/><path d="M 243.90759899541735 92.8 A 64 64 0 0 1 271.4275989954174 156.8" fill="none" stroke="url(#rim)" stroke-width="5" stroke-linecap="round"/><rect x="0" y="368" width="400" height="2" fill="#D4AF37" opacity="0.4"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400" preserveAspectRatio="xMidYMid slice"><defs>
+    <radialGradient id="pbg" cx="0.5" cy="0.32" r="0.85">
+      <stop offset="0" stop-color="#2A2440"/>
+      <stop offset="1" stop-color="#0A0F1E"/>
+    </radialGradient>
+    <linearGradient id="fig" x1="0" y1="0" x2="1" y2="0.4">
+      <stop offset="0" stop-color="#0C1120"/>
+      <stop offset="0.5" stop-color="#2E2A3E"/>
+      <stop offset="1" stop-color="#0A0F1C"/>
+    </linearGradient>
+    <linearGradient id="rim" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0.55" stop-color="#D4AF37" stop-opacity="0"/>
+      <stop offset="1" stop-color="#E5C76B" stop-opacity="0.9"/>
+    </linearGradient>
+    <radialGradient id="key" cx="0.3" cy="0.28" r="0.5">
+      <stop offset="0" stop-color="#F0C97A" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#F0C97A" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="pvig" cx="0.5" cy="0.4" r="0.75">
+      <stop offset="0.6" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0.55"/>
+    </radialGradient>
+    <filter id="pSoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="12"/></filter>
+  </defs><rect width="400" height="400" fill="url(#pbg)"/><rect width="400" height="400" fill="url(#key)"/><g filter="url(#pSoft)" opacity="0.16"><ellipse cx="105.26" cy="61.2" rx="95.2" ry="122.4" fill="#F0C97A"/></g><path d="M 87.26 400 Q 95.26 248 159.26 224 L 255.26 224 Q 319.26 248 327.26 400 Z" fill="url(#fig)"/><ellipse cx="207.26" cy="136" rx="68" ry="78.2" fill="url(#fig)"/><path d="M 241.26 74.8 A 68 78.2 0 0 1 258.26 183.6" fill="none" stroke="url(#rim)" stroke-width="4" stroke-linecap="round"/><path d="M 251.26 228 Q 311.26 252 323.26 320" fill="none" stroke="url(#rim)" stroke-width="3.5" stroke-linecap="round"/><rect width="400" height="400" fill="url(#pvig)"/><rect x="0" y="397" width="400" height="3" fill="#D4AF37" opacity="0.4"/></svg>

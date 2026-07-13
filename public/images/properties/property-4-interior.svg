@@ -1,11 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000"><defs>
-  <linearGradient id="room" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#111827"/><stop offset="1" stop-color="#060D22"/>
-  </linearGradient>
-  <linearGradient id="view" x1="0" y1="0" x2="0" y2="1">
-    <stop offset="0" stop-color="#0A142F"/><stop offset="0.7" stop-color="#3D2E4F"/><stop offset="1" stop-color="#060D22"/>
-  </linearGradient>
-  <linearGradient id="floor" x1="0" y1="0" x2="1" y2="0">
-    <stop offset="0" stop-color="#1A2238"/><stop offset="0.5" stop-color="#2A3049"/><stop offset="1" stop-color="#1A2238"/>
-  </linearGradient>
-  </defs><rect width="1600" height="1000" fill="url(#room)"/><rect x="192" y="100" width="1216" height="620" fill="url(#view)"/><rect x="192" y="512" width="73" height="208" fill="#111827" opacity="0.8"/><rect x="271" y="593" width="132" height="127" fill="#111827" opacity="0.8"/><rect x="413" y="559" width="47" height="161" fill="#111827" opacity="0.8"/><rect x="465" y="597" width="140" height="123" fill="#111827" opacity="0.8"/><rect x="627" y="648" width="81" height="72" fill="#111827" opacity="0.8"/><rect x="715" y="574" width="114" height="146" fill="#111827" opacity="0.8"/><rect x="851" y="530" width="91" height="190" fill="#111827" opacity="0.8"/><rect x="942" y="639" width="46" height="81" fill="#111827" opacity="0.8"/><rect x="1005" y="642" width="112" height="78" fill="#111827" opacity="0.8"/><rect x="1134" y="645" width="109" height="75" fill="#111827" opacity="0.8"/><rect x="1268" y="689" width="114" height="31" fill="#111827" opacity="0.8"/><rect x="1391" y="634" width="119" height="86" fill="#111827" opacity="0.8"/><circle cx="477" cy="317" r="56" fill="#E5C76B" opacity="0.9"/><rect x="435" y="100" width="6" height="620" fill="#060D22"/><rect x="678" y="100" width="6" height="620" fill="#060D22"/><rect x="922" y="100" width="6" height="620" fill="#060D22"/><rect x="1165" y="100" width="6" height="620" fill="#060D22"/><rect x="192" y="100" width="1216" height="620" fill="none" stroke="#060D22" stroke-width="14"/><rect x="0" y="720" width="1600" height="280" fill="url(#floor)"/><polygon points="192,1000 1408,1000 1189.12,720 410.88,720" fill="#E5C76B" opacity="0.08"/><rect x="320" y="780" width="448.00000000000006" height="50" rx="10" fill="#060D22"/><rect x="352" y="700" width="384" height="90" rx="14" fill="#0D1530"/><circle cx="1152" cy="620" r="14" fill="#E5C76B"/><rect x="1147.2" y="620" width="4" height="200" fill="#060D22"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice"><defs>
+    <linearGradient id="room" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#161D30"/>
+      <stop offset="0.6" stop-color="#0E1424"/>
+      <stop offset="1" stop-color="#04091A"/>
+    </linearGradient>
+    <linearGradient id="view" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#050B1E"/>
+      <stop offset="0.45" stop-color="#1E2A4E"/>
+      <stop offset="0.8" stop-color="#4A3B5C"/>
+      <stop offset="1" stop-color="#E8945C" stop-opacity="0.7"/>
+    </linearGradient>
+    <radialGradient id="ivGlow" cx="0.38" cy="0.52" r="0.7">
+      <stop offset="0" stop-color="#F0C36B" stop-opacity="0.85"/>
+      <stop offset="0.4" stop-color="#E8945C" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#E8945C" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#242B40"/>
+      <stop offset="1" stop-color="#0C1120"/>
+    </linearGradient>
+    <linearGradient id="spill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F0C36B" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#F0C36B" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="ivVig" cx="0.5" cy="0.45" r="0.8">
+      <stop offset="0.65" stop-color="#000" stop-opacity="0"/>
+      <stop offset="1" stop-color="#04091A" stop-opacity="0.5"/>
+    </radialGradient>
+    <filter id="ivSoft" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="7"/></filter>
+  </defs><rect width="1600" height="1000" fill="url(#room)"/><polygon points="0,0 1600,0 1312,80 288,80" fill="#0C1220" opacity="0.6"/><rect x="160" y="80" width="1280" height="600" fill="url(#view)"/><rect x="160" y="445.18" width="54.45" height="234.82" fill="hsl(225.4580321474932, 22%, 13.908086381619796%)" opacity="0.85"/><rect x="222.88" y="427.19" width="49.78" height="252.81" fill="hsl(225.22335884021595, 22%, 16.98928349954076%)" opacity="0.85"/><rect x="275.39" y="487.02" width="53.33" height="192.98" fill="hsl(226.56041100481525, 22%, 17.14499721280299%)" opacity="0.85"/><rect x="339.07" y="643.13" width="35.95" height="36.87" fill="hsl(222.85393849527463, 22%, 15.538164587924257%)" opacity="0.85"/><rect x="344.07" y="651.13" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="378.1" y="497.53" width="94.17" height="182.47" fill="hsl(222.55252918973565, 22%, 17.61952249938622%)" opacity="0.85"/><rect x="383.1" y="505.53" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="472.31" y="474.38" width="65.7" height="205.62" fill="hsl(223.18626474309713, 22%, 14.324174512643367%)" opacity="0.85"/><rect x="548.23" y="645.82" width="108.84" height="34.18" fill="hsl(224.8350958134979, 22%, 16.80277628125623%)" opacity="0.85"/><rect x="553.23" y="653.82" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="660.63" y="537.57" width="85.49" height="142.43" fill="hsl(224.8830777122639, 22%, 16.340071473736316%)" opacity="0.85"/><rect x="665.63" y="545.57" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="753.47" y="535.64" width="122.48" height="144.36" fill="hsl(228.82008333085105, 22%, 13.317476223688573%)" opacity="0.85"/><rect x="758.47" y="543.64" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="884.47" y="467.78" width="37.38" height="212.22" fill="hsl(229.66265964135528, 22%, 13.307445290731266%)" opacity="0.85"/><rect x="889.47" y="475.78" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="923.34" y="469.52" width="47.22" height="210.48" fill="hsl(224.925515324343, 22%, 17.74796286574565%)" opacity="0.85"/><rect x="977.77" y="531.24" width="60.6" height="148.76" fill="hsl(231.47349700517952, 22%, 14.50341993267648%)" opacity="0.85"/><rect x="1043.2" y="505.55" width="70.74" height="174.45" fill="hsl(220.23811502894387, 22%, 12.081616330891848%)" opacity="0.85"/><rect x="1123.57" y="502.12" width="120.16" height="177.88" fill="hsl(225.7004406717606, 22%, 16.48333709081635%)" opacity="0.85"/><rect x="1128.57" y="510.12" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="1245.62" y="576.83" width="78.12" height="103.17" fill="hsl(221.8973955702968, 22%, 13.856285217916593%)" opacity="0.85"/><rect x="1250.62" y="584.83" width="3" height="3" fill="#F0C36B" opacity="0.5"/><rect x="1333.51" y="588.15" width="81.05" height="91.85" fill="hsl(227.8399330903776, 22%, 16.291176841361448%)" opacity="0.85"/><rect x="1428.72" y="456.08" width="85.4" height="223.92" fill="hsl(226.00877183210105, 22%, 11.02648980054073%)" opacity="0.85"/><rect x="1433.72" y="464.08" width="3" height="3" fill="#F0C36B" opacity="0.5"/><circle cx="644.15" cy="389.54" r="60" fill="#F0C36B" opacity="0.9"/><rect x="160" y="80" width="1280" height="600" fill="url(#ivGlow)"/><rect x="480" y="80" width="5" height="600" fill="#04091A"/><rect x="800" y="80" width="5" height="600" fill="#04091A"/><rect x="1120" y="80" width="5" height="600" fill="#04091A"/><rect x="160" y="80" width="1280" height="600" fill="none" stroke="#04091A" stroke-width="16"/><rect x="160" y="80" width="1280" height="600" fill="none" stroke="#D4AF37" stroke-width="1.5" opacity="0.3"/><rect x="0" y="680" width="1600" height="320" fill="url(#floor)"/><polygon points="160,1000 1440,1000 1158.4,680 441.6,680" fill="url(#spill)"/><g filter="url(#ivSoft)" opacity="0.5"><ellipse cx="528" cy="900" rx="288" ry="18" fill="#000"/></g><rect x="320" y="740" width="416" height="100" rx="14" fill="#12192B"/><rect x="352" y="800" width="352" height="50" rx="8" fill="#0C1120"/><g filter="url(#ivSoft)"><circle cx="1152" cy="600" r="26" fill="#F0C36B" opacity="0.55"/></g><circle cx="1152" cy="600" r="7" fill="#FFF0CE"/><rect x="1147.2" y="600" width="3" height="220" fill="#0C1120"/><rect width="1600" height="1000" fill="url(#ivVig)"/></svg>

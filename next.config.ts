@@ -16,6 +16,15 @@ const gaConnect = analyticsEnabled
   : "";
 const gaImg = analyticsEnabled ? " https://www.google-analytics.com" : "";
 
+/**
+ * Optional external image host (a CDN or object store holding real
+ * photographs). When NEXT_PUBLIC_IMAGE_HOST is set, it is allow-listed for
+ * next/image optimization and added to the CSP img-src. Unset by default —
+ * all imagery is served same-origin from /public.
+ */
+const imageHost = process.env.NEXT_PUBLIC_IMAGE_HOST;
+const imgHostCsp = imageHost ? ` https://${imageHost}` : "";
+
 const securityHeaders = [
   {
     key: "Content-Security-Policy",
@@ -23,7 +32,7 @@ const securityHeaders = [
       "default-src 'self'",
       `script-src 'self' 'unsafe-inline' 'unsafe-eval'${gaScript}`,
       "style-src 'self' 'unsafe-inline'",
-      `img-src 'self' data: blob:${gaImg}`,
+      `img-src 'self' data: blob:${gaImg}${imgHostCsp}`,
       "font-src 'self' data:",
       `connect-src 'self' blob:${gaConnect}`,
       "worker-src 'self' blob:",
@@ -51,6 +60,11 @@ const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
     deviceSizes: [320, 640, 768, 1024, 1280, 1536, 1920, 2560],
+    // Allow real photographs served from an external CDN/object store when
+    // NEXT_PUBLIC_IMAGE_HOST is configured; otherwise images stay same-origin.
+    remotePatterns: imageHost
+      ? [{ protocol: "https", hostname: imageHost }]
+      : [],
   },
   async headers() {
     return [
