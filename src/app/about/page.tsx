@@ -69,8 +69,8 @@ export default async function AboutPage() {
             <Reveal>
               <div className="relative overflow-hidden rounded-lg border border-ivory/10 shadow-floating">
                 <Image
-                  src="/images/brand/about-hero.svg"
-                  alt="Abstract architectural composition of golden arcs over a colonnade"
+                  src="/images/brand/about-hero.jpg"
+                  alt="A modern timber-and-glass architectural residence at dusk"
                   width={1600}
                   height={1000}
                   sizes="(max-width: 1024px) 100vw, 50vw"

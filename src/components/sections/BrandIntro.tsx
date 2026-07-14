@@ -50,7 +50,7 @@ export function BrandIntro() {
           <Reveal delay={0.2}>
             <div className="relative overflow-hidden rounded-lg border border-ivory/10 shadow-floating">
               <Image
-                src="/images/brand/journey.svg"
+                src="/images/brand/journey.jpg"
                 alt="A tranquil residence interior at dusk, warm light across the floor"
                 width={1600}
                 height={1000}

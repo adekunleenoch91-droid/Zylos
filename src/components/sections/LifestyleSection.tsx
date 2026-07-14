@@ -13,7 +13,7 @@ export function LifestyleSection() {
       <Parallax offset={80} className="absolute inset-0">
         <div className="relative h-[130%] w-full -translate-y-[12%]">
           <Image
-            src="/images/brand/lifestyle.svg"
+            src="/images/brand/lifestyle.jpg"
             alt=""
             role="presentation"
             fill

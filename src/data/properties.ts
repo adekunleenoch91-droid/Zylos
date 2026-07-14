@@ -1,7 +1,7 @@
 import type { Property } from "@/types";
 
 const img = (n: number, kind: string, alt: string) => ({
-  src: `/images/properties/property-${n}-${kind}.svg`,
+  src: `/images/properties/property-${n}-${kind}.jpg`,
   alt,
 });
 

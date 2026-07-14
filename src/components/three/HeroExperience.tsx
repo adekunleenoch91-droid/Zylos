@@ -30,7 +30,7 @@ function HeroBackdrop({ withArt = false }: { withArt?: boolean }) {
     >
       {withArt && (
         <Image
-          src="/images/properties/property-1-exterior.svg"
+          src="/images/properties/property-1-exterior.jpg"
           alt=""
           fill
           priority
