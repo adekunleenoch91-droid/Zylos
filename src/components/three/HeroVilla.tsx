@@ -3,7 +3,7 @@
 import { MeshReflectorMaterial, Sparkles, Stars } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import type { MotionValue } from "framer-motion";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import * as THREE from "three";
 import {
   DuskEnvironment,
@@ -30,34 +30,90 @@ interface HeroVillaProps {
 /**
  * The Zylos hero environment: an original modernist villa at dusk —
  * cantilevered volumes with warm lit glazing above a reflecting pool,
- * cypress silhouettes, drifting fireflies and a slow cinematic camera
- * that pushes in as the visitor scrolls.
+ * cypress silhouettes and drifting fireflies.
+ *
+ * The camera plays a two-act, scroll-driven journey: a wide establishing
+ * push-in, then a smooth eye-level glide that travels laterally past the
+ * glass-fronted rooms — as if moving from one room to the next. Cursor
+ * movement adds a gentle parallax throughout, so the frame responds to the
+ * visitor even when they are not scrolling. All motion is critically
+ * damped, so it stays film-smooth at any scroll or pointer speed.
  */
 export function HeroVilla({ progress, tier, reducedMotion }: HeroVillaProps) {
-  const cameraTarget = useMemo(() => new THREE.Vector3(0, 1.3, 0), []);
+  // Scratch vectors reused every frame (no per-frame allocation).
+  const orbPos = useMemo(() => new THREE.Vector3(), []);
+  const glidePos = useMemo(() => new THREE.Vector3(), []);
   const desired = useMemo(() => new THREE.Vector3(), []);
+  const lookTarget = useMemo(() => new THREE.Vector3(0, 1.3, 0), []);
+  const estTgt = useMemo(() => new THREE.Vector3(), []);
+  const glideTgt = useMemo(() => new THREE.Vector3(), []);
+
+  // Normalized pointer (-1..1) tracked at window level so it works even
+  // though the canvas itself is pointer-events-none.
+  const pointer = useRef({ x: 0, y: 0 });
+  const smoothPtr = useRef({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (reducedMotion) return;
+    const onMove = (e: PointerEvent) => {
+      pointer.current.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.current.y = -((e.clientY / window.innerHeight) * 2 - 1);
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => window.removeEventListener("pointermove", onMove);
+  }, [reducedMotion]);
 
   useFrame((state, delta) => {
-    const t = reducedMotion ? 0.35 : progress.get();
     const time = state.clock.elapsedTime;
+    const t = reducedMotion ? 0.28 : progress.get();
 
-    // Cinematic dolly: wide establishing shot → low intimate push-in,
-    // with a slow orbital drift so the frame never feels static.
-    const angle = 0.55 - t * 0.85 + (reducedMotion ? 0 : Math.sin(time * 0.08) * 0.04);
-    const radius = 16.5 - t * 8.5;
-    const height = 6.2 - t * 4.2 + (reducedMotion ? 0 : Math.sin(time * 0.12) * 0.08);
+    // Smoothly ease the pointer so parallax never snaps.
+    const kp = 1 - Math.exp(-delta * 3);
+    smoothPtr.current.x +=
+      ((reducedMotion ? 0 : pointer.current.x) - smoothPtr.current.x) * kp;
+    smoothPtr.current.y +=
+      ((reducedMotion ? 0 : pointer.current.y) - smoothPtr.current.y) * kp;
+    const px = smoothPtr.current.x;
+    const py = smoothPtr.current.y;
 
-    desired.set(
-      Math.sin(angle) * radius,
-      Math.max(height, 1.4),
-      Math.cos(angle) * radius,
+    // 0 = wide establishing shot, 1 = travelling through the rooms.
+    const travel = THREE.MathUtils.smoothstep(t, 0.4, 0.85);
+
+    // Act I — wide establishing orbit that pushes in.
+    const angle = 0.5 - t * 0.55 + Math.sin(time * 0.08) * 0.03;
+    const orbR = 16.5 - t * 9;
+    const orbH = 6.4 - t * 4.2;
+    orbPos.set(
+      Math.sin(angle) * orbR,
+      Math.max(orbH, 2.2),
+      Math.cos(angle) * orbR,
     );
-    // Critically-damped easing keeps movement film-smooth at any scroll speed.
-    const smoothing = 1 - Math.exp(-delta * 2.6);
-    state.camera.position.lerp(desired, reducedMotion ? 1 : smoothing);
 
-    cameraTarget.set(0, 1.3 - t * 0.35, 0);
-    state.camera.lookAt(cameraTarget);
+    // Act II — eye-level dolly gliding laterally in front of the glazing.
+    const sweep = t <= 0.4 ? 0 : (t - 0.4) / 0.6;
+    glidePos.set(
+      THREE.MathUtils.lerp(5.6, -5.6, sweep) + px * 1.4,
+      1.55 + py * 0.5 + Math.sin(time * 0.1) * 0.03,
+      8.4 + Math.sin(sweep * Math.PI) * 0.5,
+    );
+
+    desired.lerpVectors(orbPos, glidePos, travel);
+    // Whole-scene look-around from the cursor, strongest while establishing.
+    desired.x += px * 0.8 * (1 - travel);
+    desired.y += py * 0.5 * (1 - travel);
+
+    const smoothing = reducedMotion ? 1 : 1 - Math.exp(-delta * 2.6);
+    state.camera.position.lerp(desired, smoothing);
+
+    // Look target eases from the whole villa to the room passing in front.
+    estTgt.set(px * 0.4, 1.3 - t * 0.3, 0);
+    glideTgt.set(
+      THREE.MathUtils.lerp(4.2, -4.2, sweep) + px * 1.6,
+      1.35 + py * 0.6,
+      2.2,
+    );
+    lookTarget.lerpVectors(estTgt, glideTgt, travel);
+    state.camera.lookAt(lookTarget);
   });
 
   const windows = useMemo(() => {
@@ -92,6 +148,20 @@ export function HeroVilla({ progress, tier, reducedMotion }: HeroVillaProps) {
     }
     return list;
   }, []);
+
+  // Simple interior silhouettes, revealed through the glazing on the glide.
+  const furniture = useMemo(
+    () =>
+      [
+        // [x, y, z, w, h, d] — sofa, coffee table, dining, bed, console
+        [-2.4, 0.2, 0.7, 1.7, 0.4, 0.7],
+        [-2.4, 0.11, 1.5, 0.85, 0.16, 0.5],
+        [0.2, 0.19, 0.1, 1.5, 0.36, 0.75],
+        [2.5, 0.2, -0.4, 1.5, 0.36, 2.0],
+        [0.2, 0.35, -2.0, 2.4, 0.6, 0.18],
+      ] as const,
+    [],
+  );
 
   const cypresses = useMemo(
     () =>
@@ -134,11 +204,86 @@ export function HeroVilla({ progress, tier, reducedMotion }: HeroVillaProps) {
 
       {/* The villa */}
       <group position={[0, 0, 0]}>
-        {/* Lower volume */}
-        <mesh position={[0, 0.62, 0]} castShadow receiveShadow>
-          <boxGeometry args={[8, 1.28, 5]} />
-          <meshStandardMaterial color="#1E2745" roughness={0.55} metalness={0.25} />
+        {/* Lower volume — an open, glass-fronted room shell so the interior
+            reads when the camera glides past. Walls + floor + ceiling frame
+            the volume; the front is glass. */}
+        <group>
+          <mesh position={[0, 0.02, 0]} receiveShadow>
+            <boxGeometry args={[8, 0.08, 5]} />
+            <meshStandardMaterial color="#241C10" roughness={0.85} metalness={0.1} />
+          </mesh>
+          {/* back wall */}
+          <mesh position={[0, 0.62, -2.44]} castShadow receiveShadow>
+            <boxGeometry args={[8, 1.28, 0.14]} />
+            <meshStandardMaterial color="#1E2745" roughness={0.55} metalness={0.25} />
+          </mesh>
+          {/* side walls */}
+          <mesh position={[-3.94, 0.62, 0]} castShadow receiveShadow>
+            <boxGeometry args={[0.14, 1.28, 5]} />
+            <meshStandardMaterial color="#1B2440" roughness={0.6} metalness={0.2} />
+          </mesh>
+          <mesh position={[3.94, 0.62, 0]} castShadow receiveShadow>
+            <boxGeometry args={[0.14, 1.28, 5]} />
+            <meshStandardMaterial color="#1B2440" roughness={0.6} metalness={0.2} />
+          </mesh>
+          {/* ceiling slab capping the room */}
+          <mesh position={[0, 1.28, 0]} castShadow>
+            <boxGeometry args={[8, 0.1, 5]} />
+            <meshStandardMaterial color="#161E38" roughness={0.5} metalness={0.3} />
+          </mesh>
+          {/* glass front */}
+          <mesh position={[0, 0.62, 2.5]}>
+            <planeGeometry args={[8, 1.28]} />
+            <meshStandardMaterial
+              color="#9FB6C9"
+              transparent
+              opacity={0.14}
+              roughness={0.05}
+              metalness={0.9}
+              envMapIntensity={1.4}
+            />
+          </mesh>
+        </group>
+
+        {/* Interior silhouettes */}
+        {furniture.map(([x, y, z, w, h, d], i) => (
+          <mesh key={i} position={[x, y, z]} castShadow>
+            <boxGeometry args={[w, h, d]} />
+            <meshStandardMaterial color="#17110A" roughness={0.85} metalness={0.1} />
+          </mesh>
+        ))}
+        {/* Warm interior light so the rooms glow through the glass */}
+        {tier !== "low" && (
+          <>
+            <pointLight
+              position={[-2.2, 0.95, 0.3]}
+              intensity={highQuality ? 3.2 : 2.2}
+              color="#F0C878"
+              distance={5.5}
+              decay={2}
+            />
+            {highQuality && (
+              <pointLight
+                position={[2.3, 0.95, -0.3]}
+                intensity={2.6}
+                color="#E8B268"
+                distance={5.5}
+                decay={2}
+              />
+            )}
+          </>
+        )}
+        {/* A small emissive lamp accent inside */}
+        <mesh position={[-3.2, 0.5, 1.9]}>
+          <sphereGeometry args={[0.09, 12, 12]} />
+          <meshStandardMaterial
+            color="#3A2E10"
+            emissive="#F4D48A"
+            emissiveIntensity={1.4}
+            toneMapped={false}
+          />
         </mesh>
+
         {/* Upper cantilevered volume */}
         <mesh position={[-0.8, 1.86, -0.5]} castShadow receiveShadow>
           <boxGeometry args={[6.4, 1.12, 4]} />

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Compass,
   Globe2,
@@ -23,10 +24,22 @@ const icons = {
 export function ServicesSection({ services }: { services: ServiceOffering[] }) {
   return (
     <section
-      className="section-padding bg-charcoal/50"
+      className="section-padding relative overflow-hidden bg-charcoal/50"
       aria-labelledby="services-title"
     >
-      <div className="container-content">
+      {/* Architectural background with a legibility overlay */}
+      <div aria-hidden className="absolute inset-0">
+        <Image
+          src="/images/brand/services-bg.jpg"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover opacity-40"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-midnight via-midnight/60 to-midnight" />
+      </div>
+
+      <div className="container-content relative z-10">
         <SectionHeading
           overline="Services"
           title={<span id="services-title">One house, every discipline</span>}

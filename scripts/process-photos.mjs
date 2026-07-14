@@ -42,6 +42,7 @@ const brand = {
   "about-hero": "ref-10",
   lifestyle: "ref-05",
   journey: "ref-04",
+  "services-bg": "ref-13",
 };
 
 /** Cover-crop + optimize a source into a target slot. */
