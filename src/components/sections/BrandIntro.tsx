@@ -67,7 +67,7 @@ export function BrandIntro() {
                 “An exceptional home is never sold — only entrusted.”
               </blockquote>
               <figcaption className="mt-3 text-caption uppercase tracking-widest text-champagne">
-                Elena Marchetti · Founding Partner
+                Lorenzo Marchetti · Founding Partner
               </figcaption>
             </figure>
           </Reveal>

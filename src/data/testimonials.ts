@@ -33,7 +33,7 @@ export const testimonials: Testimonial[] = [
     name: "Haruto Sato",
     position: "Managing Director · Tokyo",
     quote:
-      "Yuki understood that what we were really buying was silence. The residence she found is invisible from the street and unforgettable from the garden.",
+      "Yuki understood that what we were really buying was silence. The residence he found is invisible from the street and unforgettable from the garden.",
     rating: 5,
     avatar: { src: "/images/agents/avatar-4.svg", alt: "Portrait of Haruto Sato" },
   },

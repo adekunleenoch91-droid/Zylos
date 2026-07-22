@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, Building2 } from "lucide-react";
+import { AgentPortrait } from "@/components/cards/AgentPortrait";
 import { Rating } from "@/components/ui/Rating";
 import type { Agent } from "@/types";
 
@@ -14,13 +14,7 @@ export function AgentCard({ agent, listingsCount }: AgentCardProps) {
   return (
     <article className="group relative overflow-hidden rounded-lg border border-ivory/10 bg-graphite/50 shadow-md transition-all duration-(--duration-slow) hover:-translate-y-1.5 hover:border-gold/25 hover:shadow-floating">
       <div className="relative aspect-4/5 overflow-hidden">
-        <Image
-          src={agent.portrait.src}
-          alt={agent.portrait.alt}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-          className="object-cover transition-transform duration-700 ease-(--ease-out-expo) group-hover:scale-104"
-        />
+        <AgentPortrait src={agent.portrait.src} alt={agent.portrait.alt} />
         <div
           aria-hidden
           className="absolute inset-0 bg-gradient-to-t from-midnight/90 via-transparent to-transparent"

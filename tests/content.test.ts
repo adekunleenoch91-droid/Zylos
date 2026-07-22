@@ -77,7 +77,7 @@ describe("featured + lookups", () => {
 
 describe("agents", () => {
   it("resolves an agent and their listings", async () => {
-    const agent = await getAgentBySlug("elena-marchetti");
+    const agent = await getAgentBySlug("lorenzo-marchetti");
     expect(agent).toBeDefined();
     const listings = await getAgentListings(agent!.id);
     expect(listings.every((p) => p.agentId === agent!.id)).toBe(true);
